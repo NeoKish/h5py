@@ -26,20 +26,14 @@ if [[ "$ARCH" == "ARM64" ]]; then
 elif [[ "$ARCH" == "AMD64" ]]; then
     # Build zlib from source for Windows AMD64
     mkdir zlib_win_x64
-    curl -sLO https://github.com/madler/zlib/archive/refs/tags/v$ZLIB_VERSION.tar.gz
-    tar -xzf v$ZLIB_VERSION.tar.gz && rm v$ZLIB_VERSION.tar.gz
+    curl -sLO https://zlib.net/fossils/zlib-$ZLIB_VERSION.tar.gz
+    tar -xzf zlib-$ZLIB_VERSION.tar.gz && rm zlib-$ZLIB_VERSION.tar.gz
     cmake -S zlib-$ZLIB_VERSION -B build -G "Visual Studio 17 2022" \
     -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_INSTALL_PREFIX:PATH="$PROJECT_PATH/zlib_win_x64"
-    # Release build
     cmake --build build --config Release
     cmake --install build --config Release
-    mv zlib_win_x64/bin zlib-win-x64/bin_release
-    mv zlib_win_x64/lib zlib-win-x64/lib_release
-    # Debug build
-    cmake --build build --config Debug 
-    cmake --install build --config Debug
-    mv zlib_win_x64/bin zlib-win-x64/bin_debug
-    mv zlib_win_x64/lib zlib-win-x64/lib_debug
+    mv $PROJECT_PATH/zlib_win_x64/bin $PROJECT_PATH/zlib-win-x64/bin_release
+    mv $PROJECT_PATH/zlib_win_x64/lib $PROJECT_PATH/zlib-win-x64/lib_release
     rm -rf zlib-$ZLIB_VERSION build
     
     ZLIB_ROOT="$PROJECT_PATH/zlib-win-x64"
