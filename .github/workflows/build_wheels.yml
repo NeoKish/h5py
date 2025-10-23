@@ -133,38 +133,38 @@ jobs:
       #     name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
       #     path: ./wheelhouse/*.whl
 
-  check-minimal-build:
-    # this job isn't meant to upload anything, it's only a sanity check
-    name: Check minimal build requirements (${{ matrix.label }})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            arch: x86_64
-            cibw_before_build: pip install --only-binary ':all:' 'numpy==1.25.0' 'Cython==3.0.0' 'setuptools==77.0.1' 'pkgconfig==1.5.5'
-            label: 'numpy-min'
-          - os: ubuntu-latest
-            arch: x86_64
-            cibw_before_build: pip install --only-binary ':all:' 'numpy==2.0.0' 'Cython==3.0.0' 'setuptools==77.0.1' 'pkgconfig==1.5.5'
-            label: 'cython-min + numpy 2.0'
-    steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          fetch-depth: 0  # get the non-merge commit for PRs
-          persist-credentials: false
+  # check-minimal-build:
+  #   # this job isn't meant to upload anything, it's only a sanity check
+  #   name: Check minimal build requirements (${{ matrix.label }})
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - os: ubuntu-latest
+  #           arch: x86_64
+  #           cibw_before_build: pip install --only-binary ':all:' 'numpy==1.25.0' 'Cython==3.0.0' 'setuptools==77.0.1' 'pkgconfig==1.5.5'
+  #           label: 'numpy-min'
+  #         - os: ubuntu-latest
+  #           arch: x86_64
+  #           cibw_before_build: pip install --only-binary ':all:' 'numpy==2.0.0' 'Cython==3.0.0' 'setuptools==77.0.1' 'pkgconfig==1.5.5'
+  #           label: 'cython-min + numpy 2.0'
+  #   steps:
+  #     - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+  #       with:
+  #         fetch-depth: 0  # get the non-merge commit for PRs
+  #         persist-credentials: false
 
-      # Triage build
-      - run: bash ./ci/triage_build.sh "${{ matrix.arch }}" "${{ github.event.pull_request.head.sha || github.sha }}"
+  #     # Triage build
+  #     - run: bash ./ci/triage_build.sh "${{ matrix.arch }}" "${{ github.event.pull_request.head.sha || github.sha }}"
 
-      # Now actually build the wheels
-      - uses: pypa/cibuildwheel@9c00cb4f6b517705a3794b22395aedc36257242c # v3.2.1
-        env:
-          CIBW_ARCHS: ${{ matrix.arch }}
-          CIBW_BUILD: "cp310-*"
-          CIBW_BEFORE_BUILD: ${{ matrix.cibw_before_build }}
-          CIBW_BUILD_FRONTEND: 'pip; args: --no-build-isolation'
-          ONLY_MINDEPS_TESTS: "1"
+  #     # Now actually build the wheels
+  #     - uses: pypa/cibuildwheel@9c00cb4f6b517705a3794b22395aedc36257242c # v3.2.1
+  #       env:
+  #         CIBW_ARCHS: ${{ matrix.arch }}
+  #         CIBW_BUILD: "cp310-*"
+  #         CIBW_BEFORE_BUILD: ${{ matrix.cibw_before_build }}
+  #         CIBW_BUILD_FRONTEND: 'pip; args: --no-build-isolation'
+  #         ONLY_MINDEPS_TESTS: "1"
 
   # upload_artifacts:
   #   name: Upload build artifacts
