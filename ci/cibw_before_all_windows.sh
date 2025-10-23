@@ -7,7 +7,6 @@ if [[ "$1" == "" ]] ; then
     exit 1
 fi
 PROJECT_PATH="$1"
-ZLIB_VERSION="1.3.1"
 
 if [[ "$ARCH" == "ARM64" ]]; then
     #Use vcpkg for Windows ARM64, since Nuget\Chocolatey doesn't provide zlib package for Windows ARM64
@@ -26,12 +25,9 @@ if [[ "$ARCH" == "ARM64" ]]; then
 elif [[ "$ARCH" == "AMD64" ]]; then
     # Build zlib from source for Windows AMD64
     mkdir zlib_win_x64
-    curl -sLO https://zlib.net/fossils/zlib-$ZLIB_VERSION.tar.gz
-    tar -xzf zlib-$ZLIB_VERSION.tar.gz && rm zlib-$ZLIB_VERSION.tar.gz
-    cmake -S zlib-$ZLIB_VERSION -B build -G "Visual Studio 17 2022" \
-    -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_INSTALL_PREFIX:PATH="$PROJECT_PATH/zlib_win_x64"
-    cmake --build build --config Release
-    cmake --install build --config Release
+
+    chmod +x ci/get_zlib_amd64.sh
+    ./ci/get_zlib_amd64.sh $PROJECT_PATH/zlib_win_x64
     mv $PROJECT_PATH/zlib_win_x64/bin $PROJECT_PATH/zlib-win-x64/bin_release
     mv $PROJECT_PATH/zlib_win_x64/lib $PROJECT_PATH/zlib-win-x64/lib_release
     rm -rf zlib-$ZLIB_VERSION build
