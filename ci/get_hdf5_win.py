@@ -49,8 +49,7 @@ if ZLIB_ROOT:
         CMAKE_CONFIGURE_CMD += [
             "-DHDF5_ENABLE_Z_LIB_SUPPORT=ON",
             f"-DZLIB_INCLUDE_DIR={ZLIB_ROOT}\\include",
-            f"-DZLIB_LIBRARY_RELEASE={ZLIB_ROOT}\\lib_release\\zlib.lib",
-            f"-DZLIB_LIBRARY_DEBUG={ZLIB_ROOT}\\lib_debug\\zlibd.lib",
+            f"-DZLIB_LIBRARY_RELEASE={ZLIB_ROOT}\\lib\\zlib.lib",
         ]
     else:
         raise RuntimeError(f"Unexpected architecture detected: {platform.machine()=}")
