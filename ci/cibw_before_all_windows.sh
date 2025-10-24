@@ -27,14 +27,14 @@ elif [[ "$ARCH" == "AMD64" ]]; then
     mkdir zlib-win-x64
     # chmod +x ci/get_zlib_amd64.sh
     ./ci/get_zlib_amd64.sh $PROJECT_PATH/zlib-win-x64
-    mv $PROJECT_PATH/zlib-win-x64/bin $PROJECT_PATH/zlib-win-x64/bin_release
-    mv $PROJECT_PATH/zlib-win-x64/lib $PROJECT_PATH/zlib-win-x64/lib_release
+    # mv $PROJECT_PATH/zlib-win-x64/bin $PROJECT_PATH/zlib-win-x64/bin_release
+    # mv $PROJECT_PATH/zlib-win-x64/lib $PROJECT_PATH/zlib-win-x64/lib_release
     rm -rf zlib-$ZLIB_VERSION build
     
     ZLIB_ROOT="$PROJECT_PATH/zlib-win-x64"
-    EXTRA_PATH="$ZLIB_ROOT/bin_release"
+    EXTRA_PATH="$ZLIB_ROOT/bin"
     export CL="/I$ZLIB_ROOT/include"
-    export LINK="/LIBPATH:$ZLIB_ROOT/lib_release"
+    export LINK="/LIBPATH:$ZLIB_ROOT/lib"
     export HDF5_VSVERSION="17-64"
 else
     echo "Got unexpected arch '$ARCH'"
