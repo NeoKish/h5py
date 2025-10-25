@@ -21,5 +21,5 @@ fi
 cmake -S "$ZLIB_DIR" -B build -G "Visual Studio 17 2022" \
 -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" 
-cmake --build build --config Release --parallel
+cmake --build build --config Release
 cmake --install build --config Release
