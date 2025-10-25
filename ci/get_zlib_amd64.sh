@@ -8,6 +8,8 @@ fi
 
 INSTALL_PREFIX="$1"
 
+mkdir -p "$INSTALL_PREFIX"
+
 ZLIB_VERSION="1.3.1"
 ZLIB_DIR="zlib-$ZLIB_VERSION"
 
