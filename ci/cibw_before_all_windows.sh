@@ -24,7 +24,6 @@ if [[ "$ARCH" == "ARM64" ]]; then
     export HDF5_VSVERSION="17-arm64"
 elif [[ "$ARCH" == "AMD64" ]]; then
     # Build zlib from source for Windows AMD64
-    mkdir zlib-win-x64
     ./ci/get_zlib_amd64.sh $PROJECT_PATH/zlib-win-x64
     
     ZLIB_ROOT="$PROJECT_PATH/zlib-win-x64"
