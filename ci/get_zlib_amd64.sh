@@ -1,9 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -eo pipefail
 
-# Usage: ./build_zlib.sh <install_path>
-# Example: ./build_zlib.sh /opt/zlib
+if [[ -z "$1" ]]; then
+  echo "Usage: $0 <Path to install zlib>"
+  exit 1
+fi
 
-INSTALL_PREFIX=${1} 
+INSTALL_PREFIX="$1"
 
 ZLIB_VERSION="1.3.1"
 ZLIB_DIR="zlib-$ZLIB_VERSION"
@@ -15,7 +18,7 @@ if [ ! -d "$ZLIB_DIR" ]; then
 fi
 
 # Configure & build
-cmake -S $ZLIB_DIR -B build -G "Visual Studio 17 2022" \
+cmake -S "$ZLIB_DIR" -B build -G "Visual Studio 17 2022" \
 -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" 
 cmake --build build --config Release --parallel
