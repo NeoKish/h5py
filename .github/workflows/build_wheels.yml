@@ -19,18 +19,18 @@ concurrency:
 
 on:
   # Run daily at 1:23 UTC to upload nightly wheels to Anaconda Cloud
-  schedule:
-    - cron: '23 1 * * *'
+  # schedule:
+  #   - cron: '23 1 * * *'
   # Run on demand with workflow dispatch
   workflow_dispatch:
-  # Run on all PRs
-  pull_request:
-  # Run on tags
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
+  # # Run on all PRs
+  # pull_request:
+  # # Run on tags
+  # push:
+  #   branches:
+  #     - master
+  #   tags:
+  #     - '*'
 
 permissions:
   actions: read
