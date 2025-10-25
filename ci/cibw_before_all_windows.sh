@@ -26,7 +26,6 @@ elif [[ "$ARCH" == "AMD64" ]]; then
     # Build zlib from source for Windows AMD64
     mkdir zlib-win-x64
     ./ci/get_zlib_amd64.sh $PROJECT_PATH/zlib-win-x64
-    rm -rf zlib-$ZLIB_VERSION build
     
     ZLIB_ROOT="$PROJECT_PATH/zlib-win-x64"
     EXTRA_PATH="$ZLIB_ROOT/bin"
